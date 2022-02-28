@@ -1,0 +1,13 @@
+@import './swiper';
+.instagram-feed{
+    width: 600px;
+    position: relative;
+}
+.swiper-wrapper{
+    img{
+        object-fit: cover;
+        width: 100% !important;
+        height: 600px;
+        vertical-align: top;
+    }
+}
