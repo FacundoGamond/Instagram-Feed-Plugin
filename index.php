@@ -35,24 +35,44 @@ class InstagramFeed
     {
         add_menu_page('Instagram Feed', 'Instagram Feed', 'manage_options', 'instagramfeed', array($this, 'instagramFeedPage'), 'dashicons-instagram', 100);
         add_submenu_page('instagramfeed', 'Instagram Feed Settings', 'General Settings', 'manage_options', 'instagramfeed', array($this, 'instagramFeedPage'));
-        //add_submenu_page('instagramfeed', 'Instagram Feed Help', 'Help', 'manage_options', 'word-filter-options', array($this, 'optionsSubPage'));
     }
 
     function instagramFeedPage()
     { ?>
         <div class="wrap">
-            <h1>Instagram Token</h1>
+            <h1>Instagram Feed</h1>
+            <p>Simple plugin for display easily your Instagram Feed and regenerate your IG Token automatically</p>
+            <br>
+            <h2>Instagram Token</h2>
             <?php if ($_POST['justsubmitted'] == "true") $this->handleForm(); ?>
-            <form method="POST">
+            <form method="POST" class="instagram-feed">
                 <input type="hidden" name="justsubmitted" value="true">
                 <?php wp_nonce_field('saveIgToken', 'ourNonce'); ?>
                 <label for="plugin-instagram-feed">
-                    <p>Enter you instagram token here.</p>
+                    <p>Paste you instagram token here.</p>
                 </label>
-                <textarea name="plugin-instagram-feed" id="plugin-instagram-feed" cols="30" rows="10"><?= esc_textarea(get_option('plugin-instagram-feed')); ?></textarea>
+                <textarea name="plugin-instagram-feed" id="plugin-instagram-feed" cols="30" rows="1"><?= esc_textarea(get_option('plugin-instagram-feed')); ?></textarea>
                 <input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes">
             </form>
+
+            <h3>Usage</h3>
+            <p>Just paste in your post/page text editor this shortcode: [instagram-feed]</p>
+            <p>You can enable the slider feature adding the "slider" arg</p>
+            <span>example: [instagram-feed slider="true"]</span>
         </div>
+
+        <style>
+            .instagram-feed{
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .instagram-feed input{
+                margin-top: 16px !important;
+                width: max-content;
+            }
+        </style>
     <?php }
 
     function handleForm()
@@ -104,7 +124,6 @@ class InstagramFeed
         $tokenres = json_decode($response, true)['access_token'];
         update_option('plugin-instagram-feed', $tokenres);
     }
-
 
     function getInstagramFeed($atts)
     {

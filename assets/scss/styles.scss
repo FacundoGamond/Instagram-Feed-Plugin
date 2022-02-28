@@ -2,6 +2,8 @@
 .instagram-feed{
     width: 600px;
     position: relative;
+    max-width: 100%;
+    overflow: hidden;
 }
 .swiper-wrapper{
     img{
